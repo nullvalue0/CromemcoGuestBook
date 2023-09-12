@@ -9,4 +9,3 @@ The code ended up being just a little over 100 lines of BASIC code. The interpre
 * **GUESTBK.TXT**: This is a text dump of the source code which can be viewed from any computer.
 * **GUESTBK.DAT**: This is the actual data file that was written to as the signatures were added. It is also a binary format and can be read/written to using GET & PUT BASIC functions.
 * **ENTRIES.TXT**: This is a dump of all the guest book entries collected at VCFMW.
-* 
