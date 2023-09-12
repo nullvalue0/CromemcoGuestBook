@@ -1,0 +1,108 @@
+   10   Dim Entrydate$(69),Name$(69),Note$(69),Garbage(69)
+   20   Firstload=1
+   30   Let Count=1
+   40   Let Total=0
+   50   Open\1,70\"guestbk.dat"
+   60   On Error Goto Menu
+   70 *Beginfirst
+   80   Get\1,Count\Entrydate$
+   90   Get\1,Count\Name$
+  100   Get\1,Count\Note$
+  110   Get\1,Count\Garbage$
+  120   Count=Count+4
+  130   Total=Total+1
+  140   Goto Beginfirst
+  150 *Viewgb
+  160   Print""
+  170   Print""
+  180   Let Count=1
+  190   Dispcnt=0
+  200   Let Total=0
+  210   Open\1,70\"guestbk.dat"
+  220   On Error Goto Waitlast
+  230 *Beginview
+  240   Get\1,Count\Entrydate$
+  250   Count=Count+1
+  260   Get\1,Count\Name$
+  270   Count=Count+1
+  280   Gosub Seperator
+  290   If Dispcnt>=7 Then Gosub Waitkey
+  300   Print Using"| ### | ",Total+1;
+  310   Print Entrydate$;" | ";Name$;
+  320   Print Spc(59-Len(Name$));
+  330   Print"|"
+  340   Get\1,Count\Note$
+  350   Count=Count+1
+  360   Print"| """;Note$;"""";
+  370   Print Spc(74-Len(Note$));
+  380   Print"|"
+  390   Count=Count+1
+  400   Total=Total+1
+  410   Dispcnt=Dispcnt+1
+  420   Get\1,Count\Garbage$
+  430   Goto Beginview
+  440 *Seperator
+  450   Print"+-----+----------+------------------------------------------------------------+"
+  460   Return
+  470 *Waitkey
+  480   Print"MORE";
+  490   Dispcnt=0
+  500   Get\0\Sel$(0,0)
+  510   Gosub Seperator
+  520   Return
+  530 *Waitlast
+  540   Dispcnt=0
+  550   Gosub Seperator
+  560   Print"END";
+  570   Get\0\Sel$(0,0)
+  580 *Menu
+  590   Print Chr$(26)
+  600   Print Spc(18);
+  610   Print"* * * * SIGN THE CROMEMCO GUEST BOOK * * * *"
+  620   Print Spc(19);"Developed in Cromemco 32K Structured Basic"
+  630   Print Chr$(27);")";
+  640   Print""
+  650   Print"         #####  ######  ####### #     # ####### #     #  #####  #######        "
+  660   Print"        #     # #     # #     # ##   ## #       ##   ## #     # #     #        "
+  670   Print"        #       #     # #     # # # # # #       # # # # #       #     #        "
+  680   Print"        #       ######  #     # #  #  # #####   #  #  # #       #     #        "
+  690   Print"        #       #   #   #     # #     # #       #     # #       #     #        "
+  700   Print"        #     # #    #  #     # #     # #       #     # #     # #     #        "
+  710   Print"         #####  #     # ####### #     # ####### #     #  #####  #######        "
+  720   Print""
+  730   Print" #######        #####  ######              #     # ######  ######    #     #   "
+  740   Print"      #        #     # #     #      #      #     # #     # #     #  ##    ##   "
+  750   Print"     #               # #     #      #      #     # #     # #     # # #   # #   "
+  760   Print"    #    #####  #####  #     #    #####    ####### #     # #     #   #     #   "
+  770   Print"   #           #       #     #      #      #     # #     # #     #   #     #   "
+  780   Print"  #            #       #     #      #      #     # #     # #     #   #     #   "
+  790   Print" #######       ####### ######              #     # ######  ######  ##### ##### "
+  800   Print Chr$(27);"(";
+  810   Print""
+  820   Print Spc(23);"VCF Midwest 18      SEP 9-10, 2023"
+  830   Print""
+  840   Print Spc(29);"Total Signatures: ";Total
+  850   Print""
+  860   Print Spc(16);"[S]ign Guest Book | [V]iew Guest Book [S,V]: ";
+  870   Print Chr$(27);"0P";
+  880   Get\0\Sel$(0,0)
+  890   Print Chr$(27);"0@";
+  900   If Sel$="S" Or Sel$="s" Then Goto Signgb
+  910   If Sel$="V" Or Sel$="v" Then Close\1\ : Goto Viewgb
+  920   If Sel$="X" Or Sel$="x" Then Close\1\ : End
+  930   Goto Menu
+  940 *Signgb
+  950   Print""
+  960   Print"Signing Guest Book..."
+  970   Print""
+  980   Entrydate$="09/10/23"
+  990   Input"Enter your name: ",Name$
+ 1000   Input"Enter a message: ",Note$
+ 1010   Print""
+ 1020   Print"Saving...";
+ 1030   Close\1\
+ 1040   Open\1,70\"guestbk.dat"
+ 1050   Garbage$=""
+ 1060   Put\1,Count\Entrydate$(-1)
+ 1070   Put\1,Count+1\Name$(-1)
+ 1080   Put\1,Count+2\Note$(-1)
